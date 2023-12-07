@@ -1,6 +1,6 @@
 # kbot
 
-# Create simple telegram bot to executing some command
+# Creating simple telegram bot to executing some command
 
 **Step by stem instruction to reproducing this**
 
