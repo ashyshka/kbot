@@ -4,7 +4,7 @@
 
 **Step by stem instruction to reproducing this**
 
-- 01. Just setup Codespace WorkSpace or setup needed command to get and install packages which needed, this example for using with CodeSpace (at the local git repo will working similar)
+- 01. Just setup Codespace WorkSpace or execute needed command to get and install packages which needed, this example for using with CodeSpace (at the local git repo will working similar)
 ```
 go mod init github.com/ashyshka/kbot
 go install github.com/spf13/cobra-cli@latest
