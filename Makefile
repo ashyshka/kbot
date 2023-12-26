@@ -5,7 +5,7 @@ REGISTRY="europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
 VERSION=$(shell git rev-parse --short HEAD)
 
 format:
-        sed -i 's\1.21.4\1.20\g' go.mod
+	sed -i 's\1.21.4\1.20\g' go.mod
 	gofmt -s -w ./
 
 get:
