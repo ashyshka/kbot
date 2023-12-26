@@ -5,7 +5,7 @@ REGISTRY="europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
 VERSION=$(shell git rev-parse --short HEAD)
 
 format:
-	sed -i 's\1.21.4\1.20\g' go.mod
+#	sed -i 's\1.21.4\1.20\g' go.mod
 	gofmt -s -w ./
 
 get:
@@ -30,7 +30,8 @@ darwin: format get
 	docker build --build-arg TARGETOS=darwin --build-arg TARGETARCH=${TARGETARCH} --build-arg VERSION=${VERSION} -t ${REGESTRY}/${APP}:${VERSION}-darwin-${TARGETARCH} .
 
 image:
-	docker build  --build-arg TARGETOS=${detected_OS} --build-arg TARGETARCH=$(detected_arch) --build-arg VERSION=${VERSION} -t ${REGISTRY}/${APP}:${VERSION}-${detected_OS}-${TARGETARCH} .
+#	docker build  --build-arg TARGETOS=${detected_OS} --build-arg TARGETARCH=$(detected_arch) --build-arg VERSION=${VERSION} -t ${REGISTRY}/${APP}:${VERSION}-${detected_OS}-${TARGETARCH} .
+	docker build  --build-arg TARGETOS=linux --build-arg TARGETARCH=amd64 --build-arg VERSION=${VERSION} -t ${REGISTRY}/${APP}:${VERSION}-${detected_OS}-${TARGETARCH} .
 
 push:
 	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}

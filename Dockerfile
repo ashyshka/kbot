@@ -4,7 +4,7 @@ FROM quay.io/projectquay/golang:1.20 as builder
 
 WORKDIR /go/src/app
 COPY . .
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/ashyshka/kbot/cmd.appVersion=${VERSION}
+RUN sed -i 's\1.21.4\1.20\g' go.mod && CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/ashyshka/kbot/cmd.appVersion=${VERSION}
 
 
 FROM scratch
