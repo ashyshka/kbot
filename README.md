@@ -2,6 +2,8 @@
 
 # Creating simple telegram bot to executing some command
 
+**Local deployment**
+
 **Step by stem instruction to reproducing this**
 
 - 01. Just doing setup Codespace WorkSpace or executing needed command to get and install packages which needed, this example for using with CodeSpace (but at the local git repo this will working similar)
@@ -30,3 +32,21 @@ Andrii Shyshka, [07.12.23 23:31]
 kbot, [07.12.23 23:54]
 Hello! I'm Kbot 1.0.2
 ```
+
+**Container with Makefile imtegration**
+# Creating Artifact Regiscry
+gcloud artifacts repositories create k3s-k3d --repository-format=docker --location=europe-central2 --description="k3s-k3d" --immutable-tags --async
+
+# Create image for different platform
+Linux
+TARGETARCH=amd64 make linux
+TARGETARCH=arm64 make linux
+TARGETARCH=arm64 make linux
+
+MacOS
+TARGETARCH=amd64 make darwin
+TARGETARCH=arm64 make darwin
+TARGETARCH=erm make darwin
+
+Windows
+TARGETARCH=amd64 make windows
