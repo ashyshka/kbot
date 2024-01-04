@@ -17,8 +17,8 @@ nameOverride: ""
 fullnameOverride: ""
 
 secret:
-  name: "kbot"
   env: "TELE_TOKEN"
+  name: "kbot"
   key: "token"
 securityContext:
   privileged: true
