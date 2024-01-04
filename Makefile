@@ -1,8 +1,14 @@
-#APP="kbot"
-APP=$(shell basename $(shell git remote get-url origin))
-REGISTRY="europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
+APP="kbot"
+#APP=$(shell basename $(shell git remote get-url origin))
+# Google Artifact Registry
+#REGISTRY="europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
+# DockerHub
+REGISTRY="ashyshka"
 #VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 VERSION=$(shell git rev-parse --short HEAD)
+
+TARGETOS ?= $(shell uname | tr '[:upper:]' '[:lower:]' 2> /dev/null)
+TARGETARCH ?= $(shell dpkg --print-architecture 2>/dev/null)
 
 format:
 #	sed -i 's\1.21.4\1.20\g' go.mod
@@ -30,10 +36,10 @@ darwin: format get
 	docker build --build-arg TARGETOS=darwin --build-arg TARGETARCH=${TARGETARCH} --build-arg VERSION=${VERSION} -t ${REGESTRY}/${APP}:${VERSION}-darwin-${TARGETARCH} .
 
 image:
-	docker build  --build-arg TARGETOS=linux --build-arg TARGETARCH=amd64 --build-arg VERSION=${VERSION} -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} .
+	docker build  --build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} --build-arg VERSION=${VERSION} -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} .
 
 push:
-	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
 
 clean:
 	@rm -rf kbot; \
