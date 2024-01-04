@@ -1,17 +1,22 @@
-APP="kbot"
-#APP=$(shell basename $(shell git remote get-url origin))
-# Google Artifact Registry
-#REGISTRY="europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
-# DockerHub
-REGISTRY="ashyshka"
-#VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
-VERSION=$(shell git rev-parse --short HEAD)
+#
+APP ?= $(shell basename $(shell git remote get-url origin) | cut -d"." -f1)
+
+# Google Artifact Registry or DockerHub or GitHub Container Registry
+#REGISTRY ?= "europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
+#REGISTRY ?= "ashyshka"
+#REGISTRY ?= "ghcr.io"
+
+GITTAG := $(shell git describe --tags --abbrev=0)
+ifeq ($(GITTAG),"")
+  VERSION := $(shell git rev-parse --short HEAD)
+else
+  VERSION := $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
+endif
 
 TARGETOS ?= $(shell uname | tr '[:upper:]' '[:lower:]' 2> /dev/null)
 TARGETARCH ?= $(shell dpkg --print-architecture 2>/dev/null)
 
 format:
-#	sed -i 's\1.21.4\1.20\g' go.mod
 	gofmt -s -w ./
 
 get:
@@ -23,19 +28,19 @@ lint:
 test:
 	go test -v
 
-linux:  format get
-	@printf "$GTarget OS/ARCH: $Rlinux/${TARGETARCH}$D\n"
+info:
+	@printf "$GTarget OS/ARCH/APP/VERSION: $R${TARGETOS}/${TARGETARCH}/${APP}/${VERSION}$D\n"
+
+linux: info format get
 	docker build --build-arg TARGETOS=linux --build-arg TARGETARCH=${TARGETARCH} --build-arg VERSION=${VERSION} -t ${REGISTRY}/${APP}:${VERSION}-linux-${TARGETARCH} .
 
-windows:format get
-	@printf "$GTarget OS/ARCH: $Rwindows/${TARGETARCH}$D\n"
+windows: info format get
 	docker build --build-arg TARGETOS=windows --build-arg TARGETARCH=${TARGETARCH} --build-arg VERSION=${VERSION} -t ${REGISTRY}/${APP}:${VERSION}-windows-${TARGETARCH} .
 
-darwin: format get
-	@printf "$GTarget OS/ARCH: $Rdarwin/${TARGETARCH}$D\n"
+darwin: info format get
 	docker build --build-arg TARGETOS=darwin --build-arg TARGETARCH=${TARGETARCH} --build-arg VERSION=${VERSION} -t ${REGESTRY}/${APP}:${VERSION}-darwin-${TARGETARCH} .
 
-image:
+image: info format get
 	docker build  --build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} --build-arg VERSION=${VERSION} -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} .
 
 push:
