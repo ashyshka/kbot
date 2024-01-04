@@ -9,6 +9,7 @@ image:
 #  repository: europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d
   repository: ashyshka
   tag: 2f3a391-linux
+  os: linux
   arch: amd64
   pullPolicy: IfNotPresent
 
