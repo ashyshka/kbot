@@ -18,7 +18,7 @@ pipeline {
 
         stage('switch to branch: main') {
             steps {
-                echo 'Clone Repository'
+                echo 'Switch to the branch ${BRANCH}'
                 git branch: "${BRANCH}", url: "${GH_REPO}"
             }
         }
