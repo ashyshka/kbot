@@ -61,7 +61,7 @@ jobs:
         cmd: yq -i '.image.tag=strenv(APPTAG) | .image.os=strenv(TARGETOS) | .image.arch=strenv(TARGETARCH)' helm/values.yaml
     - uses: mikefarah/yq@master
       with:
-        cmd: yq -i '.appVersion=strenv(APPTAG) | .version=strenv(CHARTVERVION)' helm/Chart.yaml
+        cmd: yq -i '.appVersion=strenv(APPTAG) | .version=strenv(CHARTVERSION)' helm/Chart.yaml
     - run: |
         git config user.name github-actions
         git config user.email github-actions@github.com
