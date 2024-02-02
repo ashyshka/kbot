@@ -8,7 +8,7 @@ image:
   #  repository: europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d
   registry: ghcr.io
   repository: ashyshka/kbot
-  tag: v1.0.4-ab09157
+  tag: v1.0.4-288b23e
   os: linux
   arch: amd64
   pullPolicy: IfNotPresent
