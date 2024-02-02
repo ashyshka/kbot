@@ -7,6 +7,8 @@ on:
 env:
   TARGETOS: linux
   TARGETARCH: amd64
+#  REGISTRY: "ghcr.io"
+  REGISTRY: "europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
 
 jobs:
   ci:
@@ -25,13 +27,21 @@ jobs:
       - name: Run test
         run: make test
 
+# Github Solution
 #      - name: 'Login to GitHub Container Registry'
 #        uses: docker/login-action@v3
 #        with:
-#          registry: ghcr.io
+#          registry: ${{ REGISTRY }}
 #          username: ${{ github.actor }}
 #          password: ${{ secrets.GHCR_TOKEN }}
 
+#      - name: Build&Push
+#        env:
+#          APP: "kbot"
+#          REGISTRY: "${{ REGISTRY }}/ashyshka"
+#        run: make image push
+
+# Google Solution
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: "google-github-actions/auth@v2"
@@ -43,14 +53,14 @@ jobs:
       - name: Login to Artifact Registry
         uses: docker/login-action@v1
         with:
-          registry: "europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
+          registry: ${{ REGISTRY }}
           username: oauth2accesstoken
           password: ${{ steps.auth.outputs.access_token }}
 
       - name: Build&Push
         env:
           APP: "kbot"
-          REGISTRY: "europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
+          REGISTRY: ${{ REGISTRY }}
         run: make image push
 
   cd:
