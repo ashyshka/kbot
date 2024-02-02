@@ -7,7 +7,7 @@ on:
 env:
   TARGETOS: linux
   TARGETARCH: amd64
-  GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GCLOUD_TOKEN }}'
+#  GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GCLOUD_TOKEN }}'
 
 jobs:
   ci:
