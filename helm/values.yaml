@@ -11,7 +11,7 @@ image:
   # Github container registry
   #registry: ghcr.io
   #repository: ashyshka/kbot
-  tag: v1.0.4-c73a0aa
+  tag: v1.0.7-064e0f4
   os: linux
   arch: amd64
   pullPolicy: IfNotPresent
