@@ -7,7 +7,6 @@ on:
 env:
   TARGETOS: linux
   TARGETARCH: amd64
-#  GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GCLOUD_TOKEN }}'
 
 jobs:
   ci:
@@ -38,6 +37,7 @@ jobs:
         uses: "google-github-actions/auth@v2"
         with:
           credentials_json: '${{ secrets.GCLOUD_TOKEN }}'
+          create_credentials_file: true
           token_format: 'access_token'
 
       - name: Login to Artifact Registry
