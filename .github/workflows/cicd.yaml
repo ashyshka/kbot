@@ -31,14 +31,14 @@ jobs:
 #      - name: 'Login to GitHub Container Registry'
 #        uses: docker/login-action@v3
 #        with:
-#          registry: ${{ REGISTRY }}
+#          registry: $REGISTRY
 #          username: ${{ github.actor }}
 #          password: ${{ secrets.GHCR_TOKEN }}
 
 #      - name: Build&Push
 #        env:
 #          APP: "kbot"
-#          REGISTRY: "${{ REGISTRY }}/ashyshka"
+#          REGISTRY: "$REGISTRY/ashyshka"
 #        run: make image push
 
 # Google Solution
@@ -53,14 +53,14 @@ jobs:
       - name: Login to Artifact Registry
         uses: docker/login-action@v1
         with:
-          registry: ${{ REGISTRY }}
+          registry: $REGISTRY
           username: oauth2accesstoken
           password: ${{ steps.auth.outputs.access_token }}
 
       - name: Build&Push
         env:
           APP: "kbot"
-          REGISTRY: ${{ REGISTRY }}
+          REGISTRY: $REGISTRY
         run: make image push
 
   cd:
