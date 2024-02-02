@@ -25,21 +25,36 @@ jobs:
       - name: Run test
         run: make test
 
-      - name: 'Login to GitHub Container Registry'
-        uses: docker/login-action@v3
+#      - name: 'Login to GitHub Container Registry'
+#        uses: docker/login-action@v3
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GHCR_TOKEN }}
+
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: google-github-actions/auth@v2'
+      with:
+        credentials_json: '${{ secrets.GCLOUD_TOKEN }}'
+        token_format: 'access_token'
+
+      - name: Login to Artifact Registry
+        uses: docker/login-action@v1
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }}
+          registry: "europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
 
       - name: Build&Push
         env:
           APP: "kbot"
-          REGISTRY: "ghcr.io/ashyshka"
+          REGISTRY: "europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
         run: make image push
+
   cd:
     name: CD
-    needs: ci
+    needs: CI
     runs-on: ubuntu-latest
 
     steps:

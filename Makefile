@@ -2,8 +2,8 @@
 APP ?= $(shell basename $(shell git remote get-url origin) | cut -d"." -f1)
 
 # Container Registry: DockerHub, Google Artifact Registry or GitHub Container Registry (DockerHub is default)
-REGISTRY ?= "ashyshka"
-#REGISTRY ?= "europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
+#REGISTRY ?= "ashyshka"
+REGISTRY ?= "europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d"
 #REGISTRY ?= "ghcr.io/ashyshka"
 
 GITTAG := $(shell git describe --tags --abbrev=0)
