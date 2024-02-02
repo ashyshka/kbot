@@ -32,12 +32,12 @@ jobs:
 #          username: ${{ github.actor }}
 #          password: ${{ secrets.GHCR_TOKEN }}
 
-    - id: 'auth'
-      name: 'Authenticate to Google Cloud'
-      uses: google-github-actions/auth@v2'
-      with:
-        credentials_json: '${{ secrets.GCLOUD_TOKEN }}'
-        token_format: 'access_token'
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCLOUD_TOKEN }}'
+          token_format: 'access_token'
 
       - name: Login to Artifact Registry
         uses: docker/login-action@v1
