@@ -16,6 +16,7 @@ image:
   # Dockerhub
   registry: ashyshka
   repository: kbot
+
   tag: v1.0.10-bbf8dba
   os: linux
   arch: amd64
