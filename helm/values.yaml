@@ -5,7 +5,6 @@
 replicaCount: 1
 # for Google artifact registry we need to have sercret for `imagePullSecrets`, so - using public docker hub repo
 image:
-
   # Google artifact registry
   #registry: europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d
   #repository: kbot
@@ -17,8 +16,7 @@ image:
   # Dockerhub
   registry: ashyshka
   repository: kbot
-
-  tag: v1.0.7-064e0f4
+  tag: v1.0.8-5128a54
   os: linux
   arch: amd64
   pullPolicy: IfNotPresent
