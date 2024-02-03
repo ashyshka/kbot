@@ -25,6 +25,13 @@ jobs:
       - name: Run test
         run: make test
 
+# Dockerhub Solution
+      - name: Build&Push
+        env:
+          APP: "kbot"
+          REGISTRY: "ashyshka"
+        run: make image push
+
 # Github Solution
 #      - name: 'Login to GitHub Container Registry'
 #        uses: docker/login-action@v3
@@ -40,26 +47,26 @@ jobs:
 #        run: make image push
 
 # Google Solution
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: "google-github-actions/auth@v2"
-        with:
-          credentials_json: '${{ secrets.GCLOUD_TOKEN }}'
-          create_credentials_file: true
-          token_format: 'access_token'
-
-      - name: Login to Artifact Registry
-        uses: docker/login-action@v1
-        with:
-          registry: europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d
-          username: oauth2accesstoken
-          password: ${{ steps.auth.outputs.access_token }}
-
-      - name: Build&Push
-        env:
-          APP: "kbot"
-          REGISTRY: europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d
-        run: make image push
+#      - id: 'auth'
+#        name: 'Authenticate to Google Cloud'
+#        uses: "google-github-actions/auth@v2"
+#        with:
+#          credentials_json: '${{ secrets.GCLOUD_TOKEN }}'
+#          create_credentials_file: true
+#          token_format: 'access_token'
+#
+#      - name: Login to Artifact Registry
+#        uses: docker/login-action@v1
+#        with:
+#          registry: europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d
+#          username: oauth2accesstoken
+#          password: ${{ steps.auth.outputs.access_token }}
+#
+#      - name: Build&Push
+#        env:
+#          APP: "kbot"
+#          REGISTRY: europe-central2-docker.pkg.dev/gl-devops-and-kubernetes/k3s-k3d
+#        run: make image push
 
   cd:
     name: CD
